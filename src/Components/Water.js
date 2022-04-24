@@ -1,5 +1,6 @@
 import React from "react";
 import { Accordion, CardGroup, Card } from "react-bootstrap";
+import AddItem from "./AddItem";
 
 export default function Water() {
   return (

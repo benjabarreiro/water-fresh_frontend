@@ -9,14 +9,19 @@ export default function Navbar() {
         <Link className="nav-link" to="/">
           <img src={logo} alt="Logo Water Fresh" width={100} />
         </Link>
-        <NavBar.Toggle aria-controls="basic-navbar-nav" />
-        <NavBar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Link className="nav-link" to="/sobre-nosotros">
-              Sobre nosotros
-            </Link>
-          </Nav>
-        </NavBar.Collapse>
+        <div>
+          <NavBar.Toggle aria-controls="basic-navbar-nav" />
+          <NavBar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Link className="nav-link" to="/sobre-nosotros">
+                Sobre nosotros
+              </Link>
+              <Link className="nav-link" to="/distribuidor">
+                Distribuidores
+              </Link>
+            </Nav>
+          </NavBar.Collapse>
+        </div>
       </Container>
     </NavBar>
   );

@@ -33,6 +33,15 @@
 	width: 100vw;
 }
 
+form.form {
+	width: 70%;
+	margin: 0 auto;
+}
+  
+.error {
+	color: red;
+}
+
 .banner-home_titles {
 	display: flex;
 	flex-direction: column;
