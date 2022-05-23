@@ -1,48 +1,37 @@
-import React from "react";
-import { Accordion, CardGroup, Card } from "react-bootstrap";
+import React, { useContext } from "react";
+import { Accordion, CardGroup, Card, Col, Row } from "react-bootstrap";
+import ItemAction from "./ItemAction";
+import { Image } from "cloudinary-react";
+import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { CartContext } from "../CartContext";
 
-export default function Pulps() {
+export default function Pulps({ pulp }) {
+  const { addToCart } = useContext(CartContext);
   return (
     <Accordion.Item eventKey="1">
       <Accordion.Header>Pulpas naturales</Accordion.Header>
       <Accordion.Body>
         <CardGroup>
-          <Card>
-            <Card.Img
-              variant="top"
-              src="https://images.pexels.com/photos/5617/red-tomato-vegetable.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-            />
-            <Card.Body>
-              <Card.Title>Pulpa de tomate</Card.Title>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Img
-              variant="top"
-              src="https://images.pexels.com/photos/701774/pexels-photo-701774.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-            />
-            <Card.Body>
-              <Card.Title>Pulpa de mora</Card.Title>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Img
-              variant="top"
-              src="https://images.pexels.com/photos/7195133/pexels-photo-7195133.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-            />
-            <Card.Body>
-              <Card.Title>Pulpa de limon</Card.Title>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Img
-              variant="top"
-              src="https://imgs.search.brave.com/zX89SIxwTe1d15kB2j4dGuJugLa94DaqjDB0Mem-fSA/rs:fit:713:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC41/SFhHeHZqTlBFQ3Nm/QkhtZ2VYeTZBSGFF/NyZwaWQ9QXBp"
-            />
-            <Card.Body>
-              <Card.Title>Pulpa de arazá</Card.Title>
-            </Card.Body>
-          </Card>
+          <Row>
+            {pulp.map((p) => (
+              <Col key={p._id} sm="6" md="3">
+                <Card>
+                  <ItemAction action={() => addToCart(p)} icon={faCartPlus}>
+                    <Image
+                      className="card-img"
+                      cloudName="dmpmsmabd"
+                      publicId={p.img}
+                    />
+                    <Card.Body>
+                      <Card.Title>{p.productName}</Card.Title>
+                      {p.description && <Card.Text>{p.description}</Card.Text>}
+                      {p.price && <Card.Text>${p.price}</Card.Text>}
+                    </Card.Body>
+                  </ItemAction>
+                </Card>
+              </Col>
+            ))}
+          </Row>
         </CardGroup>
       </Accordion.Body>
     </Accordion.Item>

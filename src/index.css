@@ -2,8 +2,17 @@
 	color: rgba(0,0,0,.55);
 }
 
+@import './addItem.css';
+@import './cartSideDrawer.css';
+@import './backoffice.css';
+
 .navbar-collapse {
 	flex-grow: 0;
+}
+
+.navbar-menu {
+	display: flex;
+	align-items: center;
 }
 
 .banner-home {

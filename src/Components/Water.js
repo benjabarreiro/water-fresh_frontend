@@ -1,45 +1,43 @@
-import React from "react";
-import { Accordion, CardGroup, Card } from "react-bootstrap";
-import AddItem from "./AddItem";
+import React, { useContext } from "react";
+import { Accordion, CardGroup, Card, Row, Col } from "react-bootstrap";
+import ItemAction from "./ItemAction";
+import { Image } from "cloudinary-react";
+import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { CartContext } from "../CartContext";
 
-export default function Water() {
+export default function Water({ water }) {
+  const { addToCart } = useContext(CartContext);
   return (
-    <Accordion.Item eventKey="0">
-      <Accordion.Header>Aguas naturales</Accordion.Header>
-      <Accordion.Body>
-        <CardGroup>
-          <Card>
-            <Card.Img
-              className="card-img"
-              variant="top"
-              src="https://i.ebayimg.com/images/g/SKwAAOSw0rVe39Xn/s-l1600.jpg"
-            />
-            <Card.Body>
-              <Card.Title>Botellon con grifo</Card.Title>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Img
-              className="card-img"
-              variant="top"
-              src="https://media.istockphoto.com/photos/plastic-bottles-of-natural-spring-water-picture-id1193333115?k=20&m=1193333115&s=612x612&w=0&h=COFQwxwapcKgMMVGfeRAYWFdDGjcbiN5AeHPdo9JwjY="
-            />
-            <Card.Body>
-              <Card.Title>Botellon sin grifo</Card.Title>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Img
-              className="card-img"
-              variant="top"
-              src="https://media.istockphoto.com/photos/several-plastic-water-bottles-on-white-background-picture-id1146755093?k=20&m=1146755093&s=612x612&w=0&h=GAQl0mBtsRybamjTvlljmPDRR1uSQWlmCccq9rVtRvo="
-            />
-            <Card.Body>
-              <Card.Title>Botella</Card.Title>
-            </Card.Body>
-          </Card>
-        </CardGroup>
-      </Accordion.Body>
-    </Accordion.Item>
+    <>
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>Aguas naturales</Accordion.Header>
+        <Accordion.Body>
+          <CardGroup>
+            <Row>
+              {water.map((w) => (
+                <Col sm="6" md="4" key={w._id}>
+                  <Card>
+                    <ItemAction action={() => addToCart(w)} icon={faCartPlus}>
+                      <Image
+                        className="card-img"
+                        cloudName="dmpmsmabd"
+                        publicId={w.img}
+                      />
+                      <Card.Body>
+                        <Card.Title>{w.productName}</Card.Title>
+                        {w.description && (
+                          <Card.Text>{w.description}</Card.Text>
+                        )}
+                        {w.price && <Card.Text>${w.price}</Card.Text>}
+                      </Card.Body>
+                    </ItemAction>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </CardGroup>
+        </Accordion.Body>
+      </Accordion.Item>
+    </>
   );
 }
