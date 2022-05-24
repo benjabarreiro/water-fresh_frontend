@@ -30,7 +30,7 @@ const validationSchema = Yup.object({
 });
 
 export default function Distribuitor() {
-  const { values, errors, touched, getFieldProps, handleReset } = useFormik({
+  const { values, errors, touched, getFieldProps } = useFormik({
     initialValues,
     onSubmit,
     validationSchema,
