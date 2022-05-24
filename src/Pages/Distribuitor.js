@@ -15,7 +15,7 @@ const onSubmit = async (e, values) => {
   e.preventDefault();
   console.log(values)
   try {
-    const response = await axios.post("http://localhost:8080/access",values);
+    const response = await axios.post("https://water-fresh-backend.netlify.app/access",values);
     console.log(response);
   } catch (err) {
     console.log("Hubo un error al intentar enviar el mail");
