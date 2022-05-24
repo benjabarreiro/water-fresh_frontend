@@ -11,8 +11,16 @@ const initialValues = {
   phone: "",
 };
 
-const onSubmit = (values) => {
-  axios.post("http://localhost:8080/access", values);
+const onSubmit = async (e, values) => {
+  e.preventDefault();
+  console.log(values)
+  try {
+    const response = await axios.post("http://localhost:8080/access",values);
+    console.log(response);
+  } catch (err) {
+    console.log("Hubo un error al intentar enviar el mail");
+    console.log(err);
+  }
 };
 
 const validationSchema = Yup.object({
@@ -22,13 +30,7 @@ const validationSchema = Yup.object({
 });
 
 export default function Distribuitor() {
-  const {
-    handleSubmit,
-    values,
-    errors,
-    touched,
-    getFieldProps,
-  } = useFormik({
+  const { values, errors, touched, getFieldProps, handleReset } = useFormik({
     initialValues,
     onSubmit,
     validationSchema,
@@ -49,9 +51,7 @@ export default function Distribuitor() {
   return (
     <Container>
       <Separator />
-      <Form className="form" onSubmit={() => {
-        handleSubmit()
-        }}>
+      <Form className="form">
         <Form.Group className="mb-3" controlId="fullName">
           <Form.Label>Nombre Completo</Form.Label>
           <Form.Control
@@ -94,7 +94,14 @@ export default function Distribuitor() {
           </Form.Text>
         </Form.Group>
 
-        <Button variant="primary" type="submit" disabled={handleDisable()}>
+        <Button
+          variant="primary"
+          type="submit"
+          disabled={handleDisable()}
+          onClick={(e) => {
+            onSubmit(e, values);
+          }}
+        >
           Se un distribuidor
         </Button>
       </Form>
