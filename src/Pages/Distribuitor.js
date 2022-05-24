@@ -12,7 +12,20 @@ const initialValues = {
   phone: "",
 };
 
-const navigate = useNavigate()
+const validationSchema = Yup.object({
+  fullName: Yup.string().required("Required"),
+  email: Yup.string().email("Invalid email format").required("Required"),
+  phone: Yup.string().required("Required"),
+});
+
+export default function Distribuitor() {
+  const { values, errors, touched, getFieldProps } = useFormik({
+    initialValues,
+    onSubmit,
+    validationSchema,
+  });
+
+  const navigate = useNavigate()
 
 const onSubmit = async (e, values) => {
   e.preventDefault();
@@ -27,19 +40,6 @@ const onSubmit = async (e, values) => {
     navigate('/');
   }
 };
-
-const validationSchema = Yup.object({
-  fullName: Yup.string().required("Required"),
-  email: Yup.string().email("Invalid email format").required("Required"),
-  phone: Yup.string().required("Required"),
-});
-
-export default function Distribuitor() {
-  const { values, errors, touched, getFieldProps } = useFormik({
-    initialValues,
-    onSubmit,
-    validationSchema,
-  });
 
   const handleDisable = () => {
     if (
