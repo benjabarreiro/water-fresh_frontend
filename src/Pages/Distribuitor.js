@@ -4,6 +4,7 @@ import Separator from "../Components/Separator";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   fullName: "",
@@ -11,15 +12,19 @@ const initialValues = {
   phone: "",
 };
 
+const navigate = useNavigate()
+
 const onSubmit = async (e, values) => {
   e.preventDefault();
   console.log(values)
   try {
     const response = await axios.post("https://water-fresh-backend.netlify.app/access",values);
     console.log(response);
+    navigate('/')
   } catch (err) {
     console.log("Hubo un error al intentar enviar el mail");
     console.log(err);
+    navigate('/');
   }
 };
 
