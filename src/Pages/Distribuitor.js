@@ -16,7 +16,7 @@ const onSubmit = async (e, values, navigate) => {
   e.preventDefault();
   console.log(values)
   try {
-    const response = await axios.post("https://water-fresh-backend.netlify.app/access",values);
+    const response = await axios.post("https://water-fresh-backend.herokuapp.com/access",values);
     console.log(response);
     navigate('/')
   } catch (err) {
