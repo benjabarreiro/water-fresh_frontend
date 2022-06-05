@@ -36,15 +36,23 @@ export default function Navbar() {
                 <CartSideDrawer closeCartHandler={closeCartHandler} />
               )}
             </span> */}
-            {isLoggedIn && (
+            {isLoggedIn ? (
               <>
                 <Link className="nav-link" to="/administrador">
                   Editar Sitio
                 </Link>
-                <span className="nav-link" style={{ cursor: "pointer" }} onClick={logout}>
+                <span
+                  className="nav-link"
+                  style={{ cursor: "pointer" }}
+                  onClick={logout}
+                >
                   Cerrar Sesión
                 </span>
               </>
+            ) : (
+              <Link className="nav-link" to="/login">
+                Login administrador
+              </Link>
             )}
             <Link className="nav-link" to="/sobre-nosotros">
               Sobre nosotros
