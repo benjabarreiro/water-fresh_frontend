@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import { Accordion, CardGroup, Card, Col, Row } from "react-bootstrap";
-import ItemAction from "./ItemAction";
+import { Accordion, CardGroup, Card, Col, Row } from "react-bootstrap";/* 
+import ItemAction from "./ItemAction"; */
 import { Image } from "cloudinary-react";
-import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
-import { CartContext } from "../CartContext";
+/* import { faCartPlus } from "@fortawesome/free-solid-svg-icons"; */
+/* import { CartContext } from "../CartContext"; */
 
 export default function Pulps({ pulp }) {
-  const { addToCart } = useContext(CartContext);
+  /* const { addToCart } = useContext(CartContext); */
   return (
     <Accordion.Item eventKey="1">
       <Accordion.Header>Pulpas naturales</Accordion.Header>
@@ -16,7 +16,7 @@ export default function Pulps({ pulp }) {
             {pulp.map((p) => (
               <Col key={p._id} sm="6" md="3">
                 <Card>
-                  <ItemAction action={() => addToCart(p)} icon={faCartPlus}>
+                  {/* <ItemAction action={() => addToCart(p)} icon={faCartPlus}> */}
                     <Image
                       className="card-img"
                       cloudName="dmpmsmabd"
@@ -27,7 +27,7 @@ export default function Pulps({ pulp }) {
                       {p.description && <Card.Text>{p.description}</Card.Text>}
                       {p.price && <Card.Text>${p.price}</Card.Text>}
                     </Card.Body>
-                  </ItemAction>
+                  {/* </ItemAction> */}
                 </Card>
               </Col>
             ))}

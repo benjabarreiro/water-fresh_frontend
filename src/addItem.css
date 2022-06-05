@@ -30,6 +30,6 @@
 	opacity: 0.8;
 }
 
-.add-item-container:hover svg.fa-cart-plus path {
+.add-item-container:hover svg path {
 	fill: #ffffff;
 }
