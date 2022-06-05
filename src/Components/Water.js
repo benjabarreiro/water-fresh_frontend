@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Accordion, CardGroup, Card, Row, Col } from "react-bootstrap";
 /* import ItemAction from "./ItemAction"; */
 import { Image } from "cloudinary-react";
