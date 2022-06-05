@@ -10,7 +10,7 @@ const validationSchema = Yup.object({
   category: Yup.string().required("Required"),
 });
 
-export default function EditDeleteProduct({ data, setModal }) {
+export default function EditDeleteProduct({ data, setModal, handleRefresh }) {
   const initialValues = {
     ...data,
   };
@@ -30,6 +30,7 @@ export default function EditDeleteProduct({ data, setModal }) {
         "https://water-fresh-backend.herokuapp.com/delete/" + data._id
       );
       console.log(response);
+      handleRefresh();
     } catch (err) {
       console.log(err);
     }
@@ -55,11 +56,15 @@ export default function EditDeleteProduct({ data, setModal }) {
         imgData = data.img;
       }
 
-      const response = await axios.put("https://water-fresh-backend.herokuapp.com/update", {
-        ...values,
-        img: imgData,
-      });
+      const response = await axios.put(
+        "https://water-fresh-backend.herokuapp.com/update",
+        {
+          ...values,
+          img: imgData,
+        }
+      );
       console.log(response);
+      handleRefresh();
       resetForm();
     } catch (err) {
       console.log(err);
@@ -134,7 +139,11 @@ export default function EditDeleteProduct({ data, setModal }) {
           <Form.Group>
             <Form.Label>Imagen</Form.Label>
             {preview ? (
-              <img className="card-img" src={preview.image} alt={`Imagen para ${data.productName}`} />
+              <img
+                className="card-img"
+                src={preview.image}
+                alt={`Imagen para ${data.productName}`}
+              />
             ) : (
               <Image
                 className="card-img"

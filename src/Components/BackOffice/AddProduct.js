@@ -16,7 +16,7 @@ const validationSchema = Yup.object({
   category: Yup.string().required("Required"),
 });
 
-export default function AddProduct() {
+export default function AddProduct({handleRefresh}) {
   const { values, errors, touched, getFieldProps, resetForm } = useFormik({
     initialValues,
     validationSchema,
@@ -39,6 +39,7 @@ export default function AddProduct() {
         img: cloudinary.data.public_id,
       });
       console.log(response);
+      handleRefresh()
       resetForm();
     } catch (err) {
       console.log("Hubo un error");
@@ -143,9 +144,11 @@ export default function AddProduct() {
               variant="primary"
               type="submit"
               disabled={handleDisable()}
-              onClick={(e) => onSubmit(e)}
+              onClick={(e) => {
+                onSubmit(e)
+              }}
             >
-              Se un distribuidor
+              Agregar producto
             </Button>
           </Form>
         </Accordion.Body>

@@ -6,26 +6,28 @@ import ItemAction from "../ItemAction";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import EditDeleteProduct from "./EditDeleteProduct";
 
-export default function ProductsList() {
+export default function ProductsList({refresh, handleRefresh}) {
   const [water, setWater] = useState([]);
   const [pulp, setPulp] = useState([]);
   const [modal, setModal] = useState(false);
   const [data, setData] = useState({});
   const getProducts = async () => {
     try {
-      const products = await axios.get("https://water-fresh-backend.herokuapp.com/list");
+      const products = await axios.get(
+        "https://water-fresh-backend.herokuapp.com/list"
+      );
       setWater(products.data.water);
       setPulp(products.data.pulp);
     } catch (err) {}
   };
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [refresh]);
   return (
     <>
       <div>
         <Modal show={modal} onHide={() => setModal(false)}>
-          <EditDeleteProduct data={data} setModal={setModal} />
+          <EditDeleteProduct data={data} setModal={setModal} handleRefresh={handleRefresh} />
         </Modal>
         <Row>
           {water.map((w) => (
