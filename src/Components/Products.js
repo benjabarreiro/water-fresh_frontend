@@ -9,7 +9,7 @@ export default function Products() {
   const [pulp, setPulp] = useState([]);
   const getProducts = async () => {
     try {
-      const products = await axios.get("http://localhost:8080/list");
+      const products = await axios.get("https://water-fresh-backend.herokuapp.com/list");
       setWater(products.data.water);
       setPulp(products.data.pulp);
     } catch (err) {}

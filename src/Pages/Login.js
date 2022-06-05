@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import Separator from "../Components/Separator";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
 
 const initialValues = {
   user: "",
@@ -16,25 +18,24 @@ const validationSchema = Yup.object({
 });
 
 export default function Login() {
-  const {
-    values,
-    errors,
-    touched,
-    getFieldProps,
-  } = useFormik({
+  const { values, errors, touched, getFieldProps } = useFormik({
     initialValues,
     validationSchema,
   });
+  const { login } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const onSubmit = async (e, values) => {
-    e.preventDefault()
+    e.preventDefault();
+    console.log(values);
     try {
-      const response = await axios.post("http://localhost:8080/login", values);
-      console.log(response)
-    }
-    catch(err) {
-      console.log('Hubo un error al intentar enviar el mail')
-      console.log(err)
+      const response = await axios.post("https://water-fresh-backend.herokuapp.com/login", values);
+      login(response.data.userId, response.data.token);
+      navigate("/administrador");
+    } catch (err) {
+      console.log("Hubo un error al intentar iniciar sesion");
+      console.log(err);
     }
   };
 
@@ -77,7 +78,12 @@ export default function Login() {
           )}
         </Form.Group>
 
-        <Button variant="primary" type="submit" disabled={handleDisable()} onClick={(e) => onSubmit(e, values)}>
+        <Button
+          variant="primary"
+          type="submit"
+          disabled={handleDisable()}
+          onClick={(e) => onSubmit(e, values)}
+        >
           Iniciar sesión
         </Button>
       </Form>
@@ -85,4 +91,3 @@ export default function Login() {
     </Container>
   );
 }
-

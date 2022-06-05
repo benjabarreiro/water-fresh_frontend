@@ -7,14 +7,13 @@ import { AuthContext } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function BackOffice() {
-  const { token } = useContext(AuthContext);
   const navigate = useNavigate();
-
+  const { isLoggedIn } = useContext(AuthContext);
   useEffect(() => {
-    if (!token) {
-      navigate("/");
+    if (!isLoggedIn) {
+      navigate("/login");
     }
-  });
+  }, [isLoggedIn]);
 
   return (
     <Container>

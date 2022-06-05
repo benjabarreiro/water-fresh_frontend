@@ -27,7 +27,7 @@ export default function EditDeleteProduct({ data, setModal }) {
 
     try {
       const response = await axios.delete(
-        "http://localhost:8080/delete/" + data._id
+        "https://water-fresh-backend.herokuapp.com/delete/" + data._id
       );
       console.log(response);
     } catch (err) {
@@ -55,7 +55,7 @@ export default function EditDeleteProduct({ data, setModal }) {
         imgData = data.img;
       }
 
-      const response = await axios.put("http://localhost:8080/update", {
+      const response = await axios.put("https://water-fresh-backend.herokuapp.com/update", {
         ...values,
         img: imgData,
       });
@@ -76,7 +76,7 @@ export default function EditDeleteProduct({ data, setModal }) {
   return (
     <>
       <Modal.Header closeButton>
-        <Modal.Title>Editar Producto</Modal.Title>
+        <Modal.Title>Editar/Eliminar Producto</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form className="form">
@@ -118,11 +118,6 @@ export default function EditDeleteProduct({ data, setModal }) {
 
           <Form.Group className="mb-3" controlId="price">
             <Form.Label>Categoria</Form.Label>
-            {/* <Form.Control
-          type="text"
-          placeholder="Valores aceptados: pulpa o agua"
-          {...getFieldProps("category")}
-        /> */}
             <Form.Select
               aria-label="Default select example"
               {...getFieldProps("category")}
@@ -131,10 +126,6 @@ export default function EditDeleteProduct({ data, setModal }) {
               <option value="agua">Agua</option>
               <option value="pulpa">Pulpa</option>
             </Form.Select>
-            {/* <Form.Text>
-          Ingresá pulpa o agua (en minúscula) para visualizar el producto
-          agregado en el sitio
-        </Form.Text> */}
             {touched.price && errors.price && (
               <Form.Text className="error">{errors.price}</Form.Text>
             )}
@@ -143,12 +134,13 @@ export default function EditDeleteProduct({ data, setModal }) {
           <Form.Group>
             <Form.Label>Imagen</Form.Label>
             {preview ? (
-              <img className="card-img" src={preview.image} />
+              <img className="card-img" src={preview.image} alt={`Imagen para ${data.productName}`} />
             ) : (
               <Image
                 className="card-img"
                 cloudName="dmpmsmabd"
                 publicId={data.img}
+                alt={`Imagen de ${data.productName}`}
               />
             )}
             <Form.Control

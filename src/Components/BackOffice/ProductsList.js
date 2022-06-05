@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Card, Modal, Button } from "react-bootstrap";
+import { Row, Col, Card, Modal } from "react-bootstrap";
 import { Image } from "cloudinary-react";
 import axios from "axios";
 import ItemAction from "../ItemAction";
@@ -13,7 +13,7 @@ export default function ProductsList() {
   const [data, setData] = useState({});
   const getProducts = async () => {
     try {
-      const products = await axios.get("http://localhost:8080/list");
+      const products = await axios.get("https://water-fresh-backend.herokuapp.com/list");
       setWater(products.data.water);
       setPulp(products.data.pulp);
     } catch (err) {}

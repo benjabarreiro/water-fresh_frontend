@@ -34,7 +34,7 @@ export default function AddProduct() {
         `https://api.cloudinary.com/v1_1/dmpmsmabd/image/upload`,
         formData
       );
-      const response = await axios.post("http://localhost:8080/create", {
+      const response = await axios.post("https://water-fresh-backend.herokuapp.com/create", {
         ...values,
         img: cloudinary.data.public_id,
       });

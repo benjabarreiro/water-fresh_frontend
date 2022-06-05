@@ -15,6 +15,12 @@
 	align-items: center;
 }
 
+.cart-icon {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
 .banner-home {
 	overflow: hidden;
 	position: relative;

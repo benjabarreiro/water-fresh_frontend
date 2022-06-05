@@ -31,7 +31,7 @@ export default function Distribuitor() {
   const onSubmit = async (e, values) => {
     e.preventDefault()
     try {
-      const response = await axios.post("http://localhost:8080/access", values);
+      const response = await axios.post("https://water-fresh-backend.herokuapp.com/access", values);
       console.log(response)
     }
     catch(err) {
