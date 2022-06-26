@@ -153,6 +153,12 @@ footer a.nav-link.active {
 	}
 }
 
+@media(max-width: 991px) {
+	.nav-link-align {
+		text-align: right;
+	}
+}
+
 @media(max-width: 900px) {
 	.banner-home_titles {
 		top: 8%;

@@ -1,9 +1,11 @@
-import React from "react";
-import { Form, Button, Container } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Form, Button, Container, Modal } from "react-bootstrap";
 import Separator from "../Components/Separator";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
 
 const initialValues = {
   fullName: "",
@@ -27,16 +29,44 @@ export default function Distribuitor() {
     initialValues,
     validationSchema,
   });
+  const [show, setShow] = useState(false);
+  const [modalInfo, setModalInfo] = useState({ title: "", description: "" });
+  const [error, setError] = useState(false);
+
+  const navigate = useNavigate();
+
+  const redirect = useCallback((link) => navigate(link), [navigate])
+
+  useEffect(() => {
+    if(show && !error) {
+      setTimeout(() => redirect('/'), 5000)
+    }
+    if(error) {
+      setTimeout(() => setShow(false), 5000)
+    }
+  }, [show, error, redirect])
 
   const onSubmit = async (e, values) => {
     e.preventDefault()
     try {
-      const response = await axios.post("https://water-fresh-backend.herokuapp.com/access", values);
-      console.log(response)
+      await axios.post("https://water-fresh-backend.herokuapp.com/access", values);
+      setModalInfo({
+        title: "Éxito",
+        description:
+          "Tus datos se registraron exitosamente. Una persona de Water Fresh se contactará contigo!",
+      });
+      setShow(true);
     }
     catch(err) {
       console.log('Hubo un error al intentar enviar el mail')
       console.log(err)
+      setError(true)
+      setModalInfo({
+        title: "Error",
+        description:
+          "Hubo un error al intentar registrar tus datos. Vuelve a intentarlo más tarde",
+      });
+      setShow(true);
     }
   };
 
@@ -51,6 +81,15 @@ export default function Distribuitor() {
     }
     return false;
   };
+
+  const handleClose = () => {
+    if(show && !error) {
+       redirect('/')
+    }
+    if(error) {
+      setShow(false)
+    }
+  }
 
   return (
     <Container>
@@ -103,6 +142,17 @@ export default function Distribuitor() {
         </Button>
       </Form>
       <Separator />
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+            <Modal.Title>{modalInfo.title}</Modal.Title>
+        </Modal.Header>
+            <Modal.Body>{modalInfo.description}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 }

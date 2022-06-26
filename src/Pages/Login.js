@@ -28,7 +28,6 @@ export default function Login() {
 
   const onSubmit = async (e, values) => {
     e.preventDefault();
-    console.log(values);
     try {
       const response = await axios.post("https://water-fresh-backend.herokuapp.com/login", values);
       login(response.data.userId, response.data.token);

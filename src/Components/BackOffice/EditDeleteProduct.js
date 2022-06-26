@@ -26,10 +26,9 @@ export default function EditDeleteProduct({ data, setModal, handleRefresh }) {
     e.preventDefault();
 
     try {
-      const response = await axios.delete(
+      await axios.delete(
         "https://water-fresh-backend.herokuapp.com/delete/" + data._id
       );
-      console.log(response);
       handleRefresh();
     } catch (err) {
       console.log(err);
@@ -56,14 +55,13 @@ export default function EditDeleteProduct({ data, setModal, handleRefresh }) {
         imgData = data.img;
       }
 
-      const response = await axios.put(
+      await axios.put(
         "https://water-fresh-backend.herokuapp.com/update",
         {
           ...values,
           img: imgData,
         }
       );
-      console.log(response);
       handleRefresh();
       resetForm();
     } catch (err) {

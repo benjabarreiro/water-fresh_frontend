@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button, Accordion } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { AuthContext } from "../../AuthContext";
 
 const initialValues = {
   productName: "",
@@ -16,15 +17,17 @@ const validationSchema = Yup.object({
   category: Yup.string().required("Required"),
 });
 
-export default function AddProduct({handleRefresh}) {
+export default function AddProduct({ handleRefresh }) {
   const { values, errors, touched, getFieldProps, resetForm } = useFormik({
     initialValues,
     validationSchema,
   });
   const [img, setImg] = useState([]);
+  const {token} = useContext(AuthContext)
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    
 
     const formData = new FormData();
     formData.append("file", img[0]);
@@ -34,12 +37,13 @@ export default function AddProduct({handleRefresh}) {
         `https://api.cloudinary.com/v1_1/dmpmsmabd/image/upload`,
         formData
       );
-      const response = await axios.post("https://water-fresh-backend.herokuapp.com/create", {
+      await axios.post("https://water-fresh-backend.herokuapp.com/create", {
         ...values,
         img: cloudinary.data.public_id,
+      }, {
+        Authorization: 'Bearer ' + token
       });
-      console.log(response);
-      handleRefresh()
+      handleRefresh();
       resetForm();
     } catch (err) {
       console.log("Hubo un error");
@@ -145,7 +149,7 @@ export default function AddProduct({handleRefresh}) {
               type="submit"
               disabled={handleDisable()}
               onClick={(e) => {
-                onSubmit(e)
+                onSubmit(e);
               }}
             >
               Agregar producto

@@ -7,7 +7,6 @@ export default function CartProvider({ children }) {
 
   const addToCart = (item) => {
     if (isInCart(item._id)) {
-      console.log("me ejecuto");
       const arr = [...cart];
       arr.forEach((x) => {
         if (x._id === item._id) {
@@ -20,6 +19,20 @@ export default function CartProvider({ children }) {
     }
   };
 
+  const reduceQuantity = (item) => {
+    if (item.quantity > 1) {
+      const arr = [...cart];
+      arr.forEach((x) => {
+        if (x._id === item._id) {
+          return (x.quantity = x.quantity - 1);
+        }
+      });
+      setCart(arr);
+    } else {
+      removeFromCart(item._id)
+    }
+  }
+
   const removeFromCart = (id) => {
     const arr = [...cart];
     const remove = arr.filter((x) => id !== x._id);
@@ -31,7 +44,7 @@ export default function CartProvider({ children }) {
   const cartQty = cart.reduce((acc, item) => (acc += item.quantity), 0);
 
   return (
-    <CartContext.Provider value={{ addToCart, removeFromCart, cartQty, cart }}>
+    <CartContext.Provider value={{ addToCart, removeFromCart, reduceQuantity, cartQty, cart }}>
       {children}
     </CartContext.Provider>
   );
